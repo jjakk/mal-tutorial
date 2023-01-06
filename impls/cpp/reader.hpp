@@ -24,8 +24,11 @@ class Tokenizer {
                     case ',':
                         break;
                     case '~': {
-                        if (m_index + 1 < m_input.length() && m_input.at(m_index + 1) == '@')
+                        ++m_index;
+                        if (m_index + 1 < m_input.length() && m_input.at(m_index + 1) == '@'){
+                            ++m_index;
                             return view.substr(m_index++, 2);
+                        }
                         return view.substr(m_index, 1);
                     }
                     case '[':
@@ -131,7 +134,7 @@ std::vector<std::string_view> tokenize(std::string &input);
 
 Value *read_str(std::string &input);
 
-Value *read_form(Reader reader);
+Value *read_form(Reader &reader);
 
 ListValue *read_list(Reader &reader);
 

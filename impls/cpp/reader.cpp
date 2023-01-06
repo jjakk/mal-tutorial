@@ -17,7 +17,7 @@ Value *read_str(std::string &input){
     return read_form(reader);
 }
 
-Value *read_form(Reader reader){
+Value *read_form(Reader &reader){
     auto token = reader.peek();
 
     if(!token) return nullptr;
@@ -31,9 +31,20 @@ Value *read_form(Reader reader){
 }
 
 ListValue *read_list(Reader &reader){
-    
+    reader.next(); // consume '('
+    auto *list = new ListValue {};
+
+    while (auto token = reader.peek()){
+        if(*token == ")"){
+            reader.next();
+            break;
+        }
+        list->push(read_form(reader));
+    }
+
+    return list;
 }
 
 Value *read_atom(Reader &reader){
-    
+    return new SymbolValue { *reader.next() };
 }

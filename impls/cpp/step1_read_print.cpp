@@ -2,19 +2,16 @@
 #include <string>
 
 #include "linenoise.hpp"
+#include "printer.hpp"
 #include "reader.hpp"
 
-std::string READ(std::string input){
-    Tokenizer tokenizer { input };
-    while(auto token = tokenizer.next()){
-        std::cout << "[" << *token << "]\n";
-    }
-    return input;
+Value* READ(std::string input){
+    return read_str(input);
 }
 
-std::string EVAL(std::string input){ return input; }
+Value* EVAL(Value *input){ return input; }
 
-std::string PRINT(std::string input){ return input; }
+std::string PRINT(Value* input){ return pr_str(input); }
 
 std::string rep(std::string input){
     auto ast = READ(input);
